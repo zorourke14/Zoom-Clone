@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+  </script>
+  <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="script.js" defer></script>
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: rgb(131,58,180);
+      background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    }
+    
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    #video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, calc(50% - 10px));
+      gap: 20px;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+    
+    #video-grid video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    #chat-box {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    border: 2px solid black; /* Add a black border around the chat box */
+    position: relative;
+    }
+
+    
+    #chat-messages {
+      height: 200px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding-right: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    #message-input {
+      width: calc(100% - 85px);
+      margin-right: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    
+    #send-button {
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    background-color: #e0552b;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    position: absolute; /* Set the position to absolute */
+    bottom: 21px; /* Align the button to the bottom */
+    right: 10px; /* Align the button to the right */
+    }
+
+    .sender-local {
+      background-color: #4facfe;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 10px;
+      margin: 5px 0;
+      max-width: 70%;
+    }
+
+    .sender-other {
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 5px 10px;
+      border-radius: 10px;
+      margin: 5px 0;
+      max-width: 70%;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="video-grid"></div>
+
+    <!-- Chat Box Elements -->
+    <div id="chat-box">
+      <div id="chat-messages"></div>
+      <input type="text" id="message-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+      <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function handleKeyPress(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    }
+  </script>
+</body>
+
+</html>
